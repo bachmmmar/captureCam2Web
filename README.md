@@ -1,4 +1,3 @@
-
 # Capture images from Canon PowerShot SX110 IS
 
 This code captures images from Canon PowerShot camera and provides the images on a webpage and add them to an archive
@@ -9,7 +8,7 @@ For this purpose the Camera needs:
  - the powerbutton needs to be controllable by the Raspberry Pi
 
 
-# Camera modification
+## Camera modification
 To be able to poweron/poweroff the camera needs to be modified.
  * First the camera needs to be disasembled (remove back and front enclosure)
  * Solder two wires to the Powerbutton connector in the front enclosure. (use coated copper wire)
@@ -19,5 +18,5 @@ To be able to poweron/poweroff the camera needs to be modified.
  * connect photodiode with a ~150Ohm resistor to a gpio pin of the raspberry (i'm using GPIO 24 (PIN18))
 
 
-# Software configuration
+## Software configuration
 
