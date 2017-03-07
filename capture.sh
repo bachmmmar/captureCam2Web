@@ -44,9 +44,15 @@ function processSelectedZoomLevels() {
     done
 }
 
+./turn_on_off.py
+
+sleep 1
+
 echo "detecting camera..."
 checkSuccess $(isCameraRunning) "Camera detected"
 
 createDestinationFolder
 
 processSelectedZoomLevels
+
+./turn_on_off.py
