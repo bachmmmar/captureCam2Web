@@ -1,14 +1,22 @@
 #!/bin/bash
 
-source scripts/checkSuccess.sh
-
 CAMERA_NAME='Canon PowerShot SX110 IS'
 WWW_BASEDIR="/var/www/html/"
 ARCHIVE_DIR="/opt/images/"
 ZOOM_LEVELS="1 18"
 
+
+function checkSuccess() {
+    if [ $1 -ne 0 ]; then
+	echo "ERROR: ${2}"
+	exit 1
+    else
+        echo "${2}"
+    fi
+}
+
 function isCameraRunning() {
-    echo $(gphoto2 --auto-detect | grep ${CAMERA_NAME} | wc -l)
+    echo $(gphoto2 --auto-detect | grep "${CAMERA_NAME}" | wc -l)
 }
 
 function createDestinationFolder() {
@@ -44,12 +52,30 @@ function processSelectedZoomLevels() {
     done
 }
 
-./turn_on_off.py
 
+rm /tmp/capturepic 2> /dev/null
+
+while [ ! -f /tmp/capturepic ]; do
+    sleep 1
+done
+    
+
+gphoto2 --auto-detect | grep "${CAMERA_NAME}" | wc -l
+
+if [ $(isCameraRunning) -eq 1 ]; then
+    echo "camera is allready running.."
+else
+    echo "turn on camera"
+    ./turn_on_off.py
+fi
+    
 sleep 1
 
 echo "detecting camera..."
-checkSuccess $(isCameraRunning) "Camera detected"
+if [ $(isCameraRunning) -ne 1 ]; then
+    checkSuccess 1 "No Camera Connected!"
+fi
+
 
 createDestinationFolder
 
