@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-       <title>Stylesheet in einem style-Element definieren</title>
+       <title>Letzte Bilder</title>
     <style>
       img{
 	width:100%;

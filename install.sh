@@ -22,8 +22,9 @@ sudo chmod g+s
 sudo mkdir -p /opt/images/
 sudo chown pi:users -R /opt/images
 
-sudo ln -s /home/pi/captureCam2Web/www/index.php index.php
-sudo ln -s /home/pi/captureCam2Web/www/filecontrol.py filecontrol.py
+sudo ln -s $(pwd)/www/index.html /var/www/html/index.html
+sudo ln -s $(pwd)/www/latest_pictures.php /var/www/html/latest_pictures.php
+sudo ln -s $(pwd)/www/filecontrol.py /var/www/html/filecontrol.py
 
 
 # Install start scripts
