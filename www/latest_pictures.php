@@ -16,11 +16,12 @@
 
 <h1>Letzte Aufnahmen</h1>
 
-<?php 
+<?php
 if ($handle = opendir('img/')) {
     while (false !== ($entry = readdir($handle))) {
         if ($entry != "." && $entry != "..") {
-	   echo "<br><img src='img/$entry' alt='$entry'>\n";
+           $value=$entry."?".rand(100,999);
+	   echo "<br><img src='img/$value' alt='$entry'>\n";
 	}
     }
 
