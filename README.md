@@ -19,4 +19,7 @@ To be able to poweron/poweroff the camera needs to be modified.
 
 
 ## Software configuration
+Software configuration on the raspbrry is done by using the install.sh script. If the systemd service is correctly registered and running you can create a file /tmp/capturepic to get the pictures from camera. Alternatively you can use the filecontrol.py in the webdirectory.
+
+
 
