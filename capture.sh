@@ -3,7 +3,7 @@
 CAMERA_NAME='Canon PowerShot SX110 IS'
 WWW_BASEDIR="/var/www/html/"
 ARCHIVE_DIR="/opt/images/"
-ZOOM_LEVELS="1 18"
+ZOOM_LEVELS="14 8"
 
 
 function checkSuccess() {
@@ -32,7 +32,7 @@ function copyImageToWWW() {
 }
 
 function moveImage2Cache() {
-    mv captimg.jpg ${ARCHIVE_DIR}$(date +%Y-%m-%dT%H:%M:%S)_zoom$1.jpg
+    mv captimg.jpg ${ARCHIVE_DIR}$(date +%Y%m%dT%H%M%S)_zoom$1.jpg
     checkSuccess $? "Move image to archive directory"
 }
 
@@ -45,6 +45,9 @@ function takePicture() {
 }
 
 function processSelectedZoomLevels() {
+    # switch to capturing mode
+    gphoto2 --set-config Capture=1
+    
     for ZOOM in $ZOOM_LEVELS; do
 	takePicture $ZOOM
 	copyImageToWWW $ZOOM
