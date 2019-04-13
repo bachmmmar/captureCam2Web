@@ -6,31 +6,40 @@ source scripts/checkSuccess.sh
 sudo apt-get install gphoto2 apache2 php libapache2-mod-php imagemagick
 checkSuccess $? "installing packages"
 
-# change rights to access gpio and install python lib
+# setup gpio to start camera
 sudo usermod -a -G gpio pi
-#sudo usermod -a -G gpio www-data
-#sudo usermod -a -G plugdev www-data
-#sudo chown root:gpio /dev/mem
-#sudo chmod g+wr /dev/mem
+checkSuccess $? "change rights to access gpio"
+
 sudo apt-get install python3-rpi.gpio
 checkSuccess $? "install python gpio"
 
+# configure apache to run python scripts
 sudo a2enmod cgi
 checkSuccess $? "enable python cgi for apache"
 
+sudo cp enable_python_execution.conf /etc/apache2/sites-enabled/
+checkSuccess $? "adding apache config to enable python execution"
 
+echo "edit \"sudo emacs /lib/systemd/system/apache2.service\" and remove PrivateTmp=true"
+echo "press any key to continue...."
+read -n1 ans
+
+# setup www directory
 sudo chown www-data:users -R /var/www/html
 sudo mkdir /var/www/html/img
+sudo chmod 775 /var/www/html/img
 sudo chmod g+s /var/www/html/img
 
-sudo mkdir -p /opt/images/
-sudo chown pi:users -R /opt/images
-sudo chmod g+s /opt/images
 
 sudo rm /var/www/html/index.html
 sudo ln -s $(pwd)/www/index.html /var/www/html/index.html
 sudo ln -s $(pwd)/www/latest_pictures.php /var/www/html/latest_pictures.php
 sudo ln -s $(pwd)/www/filecontrol.py /var/www/html/filecontrol.py
+
+# prepare folder for images from camera
+sudo mkdir -p /opt/images/
+sudo chown pi:users -R /opt/images
+sudo chmod g+s /opt/images
 
 
 # Install start scripts
